@@ -13,9 +13,11 @@ def get_llm():
     raise ValueError(
         f"Unsupported LLM provider: {config.llm_provider}"
     )
-llm=get_llm()
-response = llm.invoke(
-    "tell me a joke in 10 words"
-)
 
-print(response.content)
+def test_llm():
+    llm=get_llm()
+    response = llm.invoke(
+        "tell me a joke in 10 words"
+    )
+
+    return (response.content)

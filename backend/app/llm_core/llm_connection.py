@@ -1,6 +1,6 @@
 from langchain_ollama import ChatOllama
 
-from app import config
+from backend import config
 
 
 def get_llm():
@@ -21,3 +21,5 @@ def test_llm():
     )
 
     return (response.content)
+
+#print(test_llm())

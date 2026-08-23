@@ -15,7 +15,7 @@ services:
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./init-script/postgres/init.sql:/docker-entrypoint-initdb.d/01-init.sql
 
     healthcheck:
       test:
@@ -34,7 +34,11 @@ services:
     restart: unless-stopped
 
     command:
-      - start-dev
+    - start-dev
+    - --import-realm
+
+    volumes:
+    - ./init-script/keycloak:/opt/keycloak/data/import
 
     environment:
       KC_DB: postgres

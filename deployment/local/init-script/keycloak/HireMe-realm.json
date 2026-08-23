@@ -1,0 +1,147 @@
+{
+  "realm": "HireMe",
+  "enabled": true,
+  "displayName": "HireMe",
+
+  "sslRequired": "none",
+
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+
+  "roles": {
+    "realm": [
+      {
+        "name": "basic",
+        "description": "Basic users can give interviews but cannot view interview reports",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "premium",
+        "description": "Premium users can give interviews and view interview reports",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  },
+
+  "groups": [
+    {
+      "name": "basic",
+      "path": "/basic",
+      "realmRoles": [
+        "basic"
+      ]
+    },
+    {
+      "name": "premium",
+      "path": "/premium",
+      "realmRoles": [
+        "premium"
+      ]
+    }
+  ],
+
+  "clients": [
+    {
+      "clientId": "hireme-frontend",
+      "name": "HireMe Frontend",
+      "description": "Angular frontend for HireMe",
+      "rootUrl": "http://localhost:4200",
+      "adminUrl": "http://localhost:4200",
+      "baseUrl": "http://localhost:4200",
+      "surrogateAuthRequired": false,
+
+      "enabled": true,
+
+      "clientAuthenticatorType": "client-secret",
+      "publicClient": true,
+      "bearerOnly": false,
+
+      "protocol": "openid-connect",
+
+      "redirectUris": [
+        "http://localhost:4200/*"
+      ],
+
+      "webOrigins": [
+        "http://localhost:4200"
+      ],
+
+      "frontchannelLogout": true,
+
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:4200/*"
+      },
+
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+
+      "protocolMappers": [
+        {
+          "name": "groups",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-group-membership-mapper",
+          "consentRequired": false,
+          "config": {
+            "full.path": "false",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "claim.name": "groups"
+          }
+        }
+      ]
+    }
+  ],
+
+  "users": [
+    {
+      "username": "jonasjoe",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Joe",
+      "lastName": "Jonas",
+      "email": "joejoe@hireme.local",
+
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Basic@123",
+          "temporary": false
+        }
+      ],
+
+      "groups": [
+        "/basic"
+      ]
+    },
+
+    {
+      "username": "cornwellm",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Missy",
+      "lastName": "Cornwell",
+      "email": "missycorn@hireme.local",
+
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Premium@123",
+          "temporary": false
+        }
+      ],
+
+      "groups": [
+        "/premium"
+      ]
+    }
+  ]
+}

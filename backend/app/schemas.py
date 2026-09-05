@@ -1,8 +1,24 @@
 from typing import Literal
 from pydantic import BaseModel, Field
 
-#Candidate
-from pydantic import BaseModel, Field
+
+class CurrentUser(BaseModel):
+    keycloak_id: str
+    username: str | None = None
+    email: str | None = None
+    first_name: str | None = None
+    last_name: str | None = None
+
+    groups: list[str] = Field(default_factory=list)
+    roles: list[str] = Field(default_factory=list)
+
+    @property
+    def is_premium(self) -> bool:
+        return "premium" in self.roles
+
+    @property
+    def is_basic(self) -> bool:
+        return "basic" in self.roles
 
 
 class Experience(BaseModel):

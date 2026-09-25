@@ -25,7 +25,7 @@ class Experience(BaseModel):
     company: str = ""
     role: str = ""
     duration: str = ""
-    responsibilities: list[str] = Field(default_factory=list) #give a field a fresh empty list as its default value
+    responsibilities: list[str] = Field(default_factory=list)
 
 
 class Project(BaseModel):
@@ -41,20 +41,15 @@ class CandidateProfile(BaseModel):
 
     skills: list[str] = Field(default_factory=list)
 
-    experience: list[Experience] = Field(
-        default_factory=list
-    )
+    experience: list[Experience] = Field(default_factory=list)
 
-    projects: list[Project] = Field(
-        default_factory=list
-    )
+    projects: list[Project] = Field(default_factory=list)
 
-    education: list[str] = Field(
-        default_factory=list
-    )
+    education: list[str] = Field(default_factory=list)
+
+    resume_text: str = ""
 
 
-#Interview
 class InterviewQuestion(BaseModel):
     action: Literal[
         "ask_question",
@@ -62,7 +57,6 @@ class InterviewQuestion(BaseModel):
     ]
 
     question: str | None = None
-
     topic: str | None = None
 
     difficulty: Literal[
@@ -76,24 +70,27 @@ class CandidateAnswer(BaseModel):
     answer: str
 
 
+class InterviewMessage(BaseModel):
+    role: Literal[
+        "system",
+        "interviewer",
+        "candidate",
+    ]
+
+    content: str
+
+
 class Evaluation(BaseModel):
     score: float = Field(
-        ge=0, #greater than or equal to 
-        le=100, #less than or equal to
-    )
-    #ge and le are validation constraints
-
-    strengths: list[str] = Field(
-        default_factory=list
+        ge=0,
+        le=100,
     )
 
-    weaknesses: list[str] = Field(
-        default_factory=list
-    )
+    strengths: list[str] = Field(default_factory=list)
 
-    technical_gaps: list[str] = Field(
-        default_factory=list
-    )
+    weaknesses: list[str] = Field(default_factory=list)
+
+    technical_gaps: list[str] = Field(default_factory=list)
 
     communication_score: float = Field(
         ge=0,
@@ -102,9 +99,25 @@ class Evaluation(BaseModel):
 
     feedback: str = ""
 
-    improvement_plan: list[str] = Field(
-        default_factory=list
-    )
+    improvement_plan: list[str] = Field(default_factory=list)
+
+
+class AgentResponse(BaseModel):
+    action: Literal[
+        "ask_question",
+        "end_round",
+    ]
+
+    question: str | None = None
+    topic: str | None = None
+
+    difficulty: Literal[
+        "easy",
+        "medium",
+        "hard",
+    ] | None = None
+
+    evaluation: Evaluation | None = None
 
 
 class FinalEvaluation(BaseModel):
@@ -113,24 +126,17 @@ class FinalEvaluation(BaseModel):
         le=100,
     )
 
-    hiring_recommendation: Literal[
-        "strong_yes",
-        "yes",
-        "borderline",
-        "no",
-        "strong_no",
+    readiness: Literal[
+        "excellent",
+        "good",
+        "developing",
+        "needs_improvement",
     ]
 
-    strengths: list[str] = Field(
-        default_factory=list
-    )
+    strengths: list[str] = Field(default_factory=list)
 
-    weaknesses: list[str] = Field(
-        default_factory=list
-    )
+    weaknesses: list[str] = Field(default_factory=list)
 
-    improvement_plan: list[str] = Field(
-        default_factory=list
-    )
+    improvement_plan: list[str] = Field(default_factory=list)
 
     summary: str = ""

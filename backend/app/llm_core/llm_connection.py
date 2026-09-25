@@ -1,6 +1,6 @@
 from langchain_ollama import ChatOllama
 
-from backend import config
+from backend.app import config
 
 
 def get_llm():
